@@ -2,11 +2,10 @@ package swap;
 
 public class Swap {
 
+    static int[] tmp2 = new int[6];
     public static void main(String[] args) {
         int[] arr1 = {1, 2, 3, 4, 5};
-        int[] arr1R = {1, 2, 3, 4, 5};
         int[] arr2 = {0, 1, 2, 3, 4, 5};
-        int[] arr2R = {0, 1, 2, 3, 4, 5};
 
         swap(arr1, 1);
         for (int i : arr1) {
@@ -14,20 +13,29 @@ public class Swap {
         }
 
         System.out.println();
-        swapR(arr1R, 1);
-        for (int i : arr1R) {
+        for (int i = 0; i < 5; i++) arr1[i] = i + 1;
+        swapR(arr1, 1);
+        for (int i : arr1) {
             System.out.println("i = " + i);
         }
 
         System.out.println();
-        swap(arr2, 1, 1, arr2.length);
+        swap(arr2, 2, 1, arr2.length);
         for (int i : arr2) {
             System.out.println("i = " + i);
         }
 
         System.out.println();
-        swapR(arr2R, 1, 1, arr2R.length);
-        for (int i : arr2R) {
+        for (int i = 0; i < 6; i++) arr2[i] = i;
+        swapR(arr2, 1, 1, arr2.length);
+        for (int i : arr2) {
+            System.out.println("i = " + i);
+        }
+
+        System.out.println();
+        for (int i = 0; i < 6; i++) arr2[i] = i;
+        swap(arr2, 2, false);
+        for (int i : arr2) {
             System.out.println("i = " + i);
         }
     }
@@ -76,6 +84,18 @@ public class Swap {
         }
 
         System.arraycopy(tmp, 0, arr, start, len);
+    }
+
+    static void swap(int[] arr, int k, boolean clockWise) { // k 만큼 스왑
+        int len = arr.length;
+
+        if (clockWise) {
+            for (int i = 1; i < len; i++) tmp2[(i - 1 + k) % (len - 1)] = arr[i];
+        } else {
+            for (int i = 1; i < len; i++) tmp2[(i - 1 + len - k) % (len - 1)] = arr[i];
+        }
+
+        System.arraycopy(tmp2, 0, arr, 1, len - 1);
     }
 
 }
