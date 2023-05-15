@@ -1,27 +1,32 @@
 package prime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FindPrime {
 
-    static boolean[] getPrime(int n) {
-        boolean[] notPrime = new boolean[n + 1];
+    List<Integer> primes = new ArrayList<>();
 
-        notPrime[0] = notPrime[1] = true;
-        if (n == 1) return notPrime;
+    void getPrime(int n) {
+        int[] arr = new int[n + 1];
+        int root = (int) Math.sqrt(n);
+        for (int i = 2; i <= n; i++) {
+            arr[i] = i;
+        }
 
-        for (int i = 2; i * i < n; i++) {
-            if (!notPrime[i]) {
-                for (int j = i * i; j <= n; j += i)
-                    notPrime[j] = true;
+        for (int i = 2; i <= root; i++) {
+            if (arr[i] != 0) {
+                for (int j = i * 2; j <= n; j += i) {
+                    arr[j] = 0;
+                }
             }
         }
 
-        return notPrime;
-    }
-
-    public static void main(String[] args) {
-        boolean[] prime = getPrime(10);
-        for (boolean b : prime) {
-            System.out.println("b = " + b);
+        for (int i = 2; i <= n; i++) {
+            if (arr[i] != 0) {
+                primes.add(arr[i]);
+            }
         }
     }
+
 }
